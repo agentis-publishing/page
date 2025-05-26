@@ -48,7 +48,7 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Agentis Main Card */}
             <Link href="/agentis-coming-soon" className="block">
-              <div className="p-8 border-4 border-black bg-purple-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-yellow-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">🔬</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS</h3>
                 <p className="text-black text-sm mb-4 leading-relaxed">
@@ -65,7 +65,7 @@ export default function HomePage() {
 
             {/* Agentis Biology Card */}
             <Link href="/agentis-biology" className="block">
-              <div className="p-8 border-4 border-black bg-orange-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-blue-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">🧬</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS BIOLOGY</h3>
                 <p className="text-black text-sm mb-6 leading-relaxed">
@@ -79,7 +79,7 @@ export default function HomePage() {
 
             {/* Agentis Science Data Card */}
             <Link href="/agentis-datasets" className="block">
-              <div className="p-8 border-4 border-black bg-blue-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-orange-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">📊</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS SCIENCE DATA</h3>
                 <p className="text-black text-sm mb-6 leading-relaxed">

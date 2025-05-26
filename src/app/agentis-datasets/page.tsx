@@ -74,7 +74,7 @@ export default function AgentisDatasetsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 bg-blue-400 text-white border-b-4 border-black">
+      <section className="relative py-20 px-4 bg-orange-400 text-white border-b-4 border-black">
         <div className="max-w-6xl mx-auto text-center">
           <div className="text-8xl mb-8">📊</div>
           <h1 className="font-display text-display-xl font-bold mb-6">
@@ -88,7 +88,7 @@ export default function AgentisDatasetsPage() {
             <Button size="lg" variant="secondary" href="/browse-datasets">
               BROWSE DATASETS
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-400">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-orange-400">
               SUBMIT DATASET
             </Button>
           </div>
@@ -98,17 +98,17 @@ export default function AgentisDatasetsPage() {
       {/* Dataset Categories */}
       <section className="py-20 px-4 bg-white border-b-4 border-black">
         <div className="max-w-6xl mx-auto">
-          <h2 className="font-display text-display-md font-bold mb-12 text-center border-b-4 border-blue-400 pb-4 inline-block w-full">
+          <h2 className="font-display text-display-md font-bold mb-12 text-center border-b-4 border-orange-400 pb-4 inline-block w-full">
             DATASET CATEGORIES
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {datasetCategories.map((category, index) => (
               <Link key={index} href={`/browse-datasets?category=${category.name.toLowerCase()}`} className="group">
-                <div className="bg-light-gray border-4 border-black p-8 text-center hover:bg-blue-400 hover:text-white transition-all duration-200 transform hover:scale-105 shadow-neo-lg hover:shadow-neo-lg-hover">
+                <div className="bg-light-gray border-4 border-black p-8 text-center hover:bg-orange-400 hover:text-white transition-all duration-200 transform hover:scale-105 shadow-neo-lg hover:shadow-neo-lg-hover">
                   <div className="text-5xl mb-4">{category.icon}</div>
                   <h3 className="font-display text-xl font-bold mb-2">{category.name}</h3>
-                  <div className="bg-blue-400 text-white px-3 py-1 text-sm font-bold uppercase tracking-wider mb-3 inline-block group-hover:bg-white group-hover:text-blue-400">
+                  <div className="bg-orange-400 text-white px-3 py-1 text-sm font-bold uppercase tracking-wider mb-3 inline-block group-hover:bg-white group-hover:text-orange-400">
                     {category.count} DATASETS
                   </div>
                   <p className="text-sm">{category.description}</p>
@@ -123,7 +123,7 @@ export default function AgentisDatasetsPage() {
       <section className="py-20 px-4 bg-light-gray border-b-4 border-black">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-12">
-            <h2 className="font-display text-display-md font-bold border-b-4 border-blue-400 pb-2 inline-block">
+            <h2 className="font-display text-display-md font-bold border-b-4 border-orange-400 pb-2 inline-block">
               FEATURED DATASETS
             </h2>
             <Button variant="ghost" href="/browse-datasets">
@@ -190,7 +190,7 @@ export default function AgentisDatasetsPage() {
       {/* Data Standards */}
       <section className="py-20 px-4 bg-white border-b-4 border-black">
         <div className="max-w-6xl mx-auto">
-          <h2 className="font-display text-display-md font-bold mb-12 text-center border-b-4 border-blue-400 pb-4 inline-block w-full">
+          <h2 className="font-display text-display-md font-bold mb-12 text-center border-b-4 border-orange-400 pb-4 inline-block w-full">
             DATA STANDARDS & QUALITY
           </h2>
 
@@ -230,7 +230,7 @@ export default function AgentisDatasetsPage() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="p-8 border-4 border-white text-center bg-blue-400">
+            <div className="p-8 border-4 border-white text-center bg-orange-400">
               <div className="font-display font-black text-4xl md:text-5xl mb-2 text-white">657</div>
               <div className="font-bold text-sm uppercase tracking-wider text-white/90">Total Datasets</div>
             </div>
@@ -238,7 +238,7 @@ export default function AgentisDatasetsPage() {
               <div className="font-display font-black text-4xl md:text-5xl mb-2">45.2TB</div>
               <div className="font-bold text-sm uppercase tracking-wider opacity-90">Total Data Size</div>
             </div>
-            <div className="p-8 border-4 border-white text-center bg-blue-400">
+            <div className="p-8 border-4 border-white text-center bg-orange-600">
               <div className="font-display font-black text-4xl md:text-5xl mb-2 text-white">2.1M</div>
               <div className="font-bold text-sm uppercase tracking-wider text-white/90">Total Downloads</div>
             </div>
@@ -281,7 +281,7 @@ export default function AgentisDatasetsPage() {
             </div>
 
             <div className="flex justify-center">
-              <div className="w-64 h-64 bg-blue-400 border-4 border-black shadow-neo-lg flex items-center justify-center transform rotate-3 hover:rotate-6 transition-transform duration-300">
+              <div className="w-64 h-64 bg-orange-400 border-4 border-black shadow-neo-lg flex items-center justify-center transform rotate-3 hover:rotate-6 transition-transform duration-300">
                 <div className="text-white font-display font-bold text-6xl">API</div>
               </div>
             </div>
@@ -290,7 +290,7 @@ export default function AgentisDatasetsPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-20 px-4 bg-blue-400 text-white">
+      <section className="py-20 px-4 bg-orange-400 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-display-md font-bold mb-6">
             CONTRIBUTE YOUR DATA
@@ -303,7 +303,7 @@ export default function AgentisDatasetsPage() {
             <Button size="lg" variant="secondary" href="/submit-dataset">
               SUBMIT DATASET
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-400" href="/docs/submission">
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-orange-400" href="/docs/submission">
               SUBMISSION GUIDELINES
             </Button>
           </div>

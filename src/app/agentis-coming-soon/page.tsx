@@ -5,9 +5,9 @@ export default function AgentisComingSoon() {
   return (
     <div className="min-h-screen bg-light-gray">
       {/* Hero Section */}
-      <section className="py-20 px-6 md:px-8 bg-purple-400">
+      <section className="py-20 px-6 md:px-8 bg-yellow-400">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-12 border-4 border-black bg-purple-400 shadow-[8px_8px_0px_#000]">
+          <div className="p-12 border-4 border-black bg-yellow-400 shadow-[8px_8px_0px_#000]">
             <div className="text-6xl mb-8">🔬</div>
             <h1 className="font-display text-5xl md:text-6xl font-black mb-6 text-black">
               AGENTIS
@@ -124,9 +124,9 @@ export default function AgentisComingSoon() {
       </section>
 
       {/* Stay Updated Section */}
-      <section className="py-20 px-6 md:px-8 bg-purple-400">
+      <section className="py-20 px-6 md:px-8 bg-yellow-400">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-12 border-4 border-black bg-purple-400 shadow-[6px_6px_0px_#000]">
+          <div className="p-12 border-4 border-black bg-yellow-400 shadow-[6px_6px_0px_#000]">
             <h2 className="font-display text-4xl font-bold mb-8 text-black">
               STAY UPDATED
             </h2>
@@ -138,7 +138,7 @@ export default function AgentisComingSoon() {
               <Button size="lg" variant="secondary" href="/contact">
                 GET NOTIFIED
               </Button>
-              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-purple-400" href="/">
+              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-yellow-400" href="/">
                 EXPLORE OTHER JOURNALS
               </Button>
             </div>
@@ -155,7 +155,7 @@ export default function AgentisComingSoon() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Link href="/agentis-biology" className="block">
-              <div className="p-8 border-4 border-black bg-orange-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-blue-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">🧬</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS BIOLOGY</h3>
                 <p className="text-black text-sm mb-6 leading-relaxed">
@@ -168,7 +168,7 @@ export default function AgentisComingSoon() {
             </Link>
 
             <Link href="/agentis-datasets" className="block">
-              <div className="p-8 border-4 border-black bg-blue-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-orange-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">📊</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS SCIENCE DATA</h3>
                 <p className="text-black text-sm mb-6 leading-relaxed">
