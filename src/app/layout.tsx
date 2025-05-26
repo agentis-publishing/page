@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/ui/Navigation";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Agentis Science - Open Access Scientific Publishing Platform",
@@ -45,10 +46,10 @@ export default function RootLayout({
               Democratizing scientific publishing through AI-assisted peer review
             </p>
             <div className="flex justify-center space-x-8 text-sm">
-              <a href="/about" className="hover:text-accent transition-colors">About</a>
-              <a href="/contact" className="hover:text-accent transition-colors">Contact</a>
-              <a href="/privacy" className="hover:text-accent transition-colors">Privacy</a>
-              <a href="/terms" className="hover:text-accent transition-colors">Terms</a>
+              <Link href="/about" className="hover:text-accent transition-colors">About</Link>
+              <Link href="/contact" className="hover:text-accent transition-colors">Contact</Link>
+              <Link href="/privacy" className="hover:text-accent transition-colors">Privacy</Link>
+              <Link href="/terms" className="hover:text-accent transition-colors">Terms</Link>
             </div>
             <div className="mt-8 pt-8 border-t-2 border-gray-800 text-xs text-gray-400">
               © 2024 Agentis Science. All rights reserved.

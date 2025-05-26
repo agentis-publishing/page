@@ -88,7 +88,7 @@ export default function AgentisDatasetsPage() {
             <Button size="lg" variant="secondary" href="/browse-datasets">
               BROWSE DATASETS
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-black bg-white hover:bg-white hover:text-orange-400">
+            <Button size="lg" variant="outline" className="border-white !text-black bg-white hover:bg-white hover:text-orange-400">
               SUBMIT DATASET
             </Button>
           </div>
@@ -303,7 +303,7 @@ export default function AgentisDatasetsPage() {
             <Button size="lg" variant="secondary" href="/submit-dataset">
               SUBMIT DATASET
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-black bg-white hover:bg-white hover:text-orange-400" href="/docs/submission">
+            <Button size="lg" variant="outline" className="border-white !text-black bg-white hover:bg-white hover:text-orange-400" href="/docs/submission">
               SUBMISSION GUIDELINES
             </Button>
           </div>

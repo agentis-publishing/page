@@ -213,7 +213,7 @@ export default function AgentisBiologyPage() {
             <Button size="lg" variant="secondary" href="/submit-paper">
               SUBMIT YOUR RESEARCH
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-black bg-white hover:bg-white hover:text-blue-400" href="/for-authors">
+            <Button size="lg" variant="outline" className="border-white !text-black bg-white hover:bg-white hover:text-blue-400" href="/for-authors">
               AUTHOR GUIDELINES
             </Button>
           </div>
