@@ -8,7 +8,7 @@ export default function AboutPage() {
       <section className="py-20 px-4 bg-light-gray border-b-3 border-black">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-display text-display-lg font-bold mb-6">
-            About Agentis Biology
+            About Agentis Publishing
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             A grassroots open-access journal reimagining peer review through artificial intelligence.
@@ -101,7 +101,7 @@ export default function AboutPage() {
           <p className="text-lg text-gray-700 mb-12 text-center max-w-4xl mx-auto">
             Agentis Biology combines traditional scientific publishing values with innovative AI technologies:
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card>
               <CardHeader>
@@ -112,9 +112,9 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">
-                  Our autonomous AI reviewers run a battery of checks for methods integrity, 
-                  statistical soundness, and citation completeness, within minutes. Human co-review 
-                  is available during the pilot for those who want it, but the agents alone already 
+                  Our autonomous AI reviewers run a battery of checks for methods integrity,
+                  statistical soundness, and citation completeness, within minutes. Human co-review
+                  is available during the pilot for those who want it, but the agents alone already
                   deliver a faster, transparent, and fully traceable review.
                 </p>
               </CardContent>
@@ -129,9 +129,9 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">
-                  Agentis Biology is governed by a diverse board of scientists, ensuring that 
-                  decisions reflect the needs and values of the research community. We maintain 
-                  transparency in our processes and regularly solicit feedback from authors, 
+                  Agentis Biology is governed by a diverse board of scientists, ensuring that
+                  decisions reflect the needs and values of the research community. We maintain
+                  transparency in our processes and regularly solicit feedback from authors,
                   reviewers, and readers.
                 </p>
               </CardContent>
@@ -146,8 +146,8 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">
-                  All articles published in Agentis Biology are freely available to read, 
-                  download, and share. We believe that removing paywalls accelerates scientific 
+                  All articles published in Agentis Biology are freely available to read,
+                  download, and share. We believe that removing paywalls accelerates scientific
                   progress and ensures that research can benefit society at large.
                 </p>
               </CardContent>
@@ -162,8 +162,8 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700">
-                  We operate on a cost-recovery model, with minimal fees to cover operational 
-                  expenses. Our focus is on disseminating quality research, not generating profit. 
+                  We operate on a cost-recovery model, with minimal fees to cover operational
+                  expenses. Our focus is on disseminating quality research, not generating profit.
                   We&apos;re constantly exploring new ways to make publishing more efficient and accessible.
                 </p>
               </CardContent>
@@ -179,11 +179,11 @@ export default function AboutPage() {
             Our Team
           </h2>
           <p className="text-lg text-gray-700 mb-12 text-center max-w-4xl mx-auto">
-            Agentis Biology was founded by a team of scientists, technologists, and publishing experts 
-            committed to improving scientific communication. Our editorial board includes researchers 
+            Agentis Biology was founded by a team of scientists, technologists, and publishing experts
+            committed to improving scientific communication. Our editorial board includes researchers
             from diverse backgrounds, disciplines, and career stages.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
@@ -195,7 +195,7 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 text-center">
-                  Computational biologist with expertise in AI applications for scientific research. 
+                  Computational biologist with expertise in AI applications for scientific research.
                   Experienced journal editor and 10+ years experience in scientific publishing.
                 </p>
               </CardContent>
@@ -211,7 +211,7 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 text-center">
-                  SFSU, Knowledgegraph expert, AI-bioinformatics, ex-Berkeley Lab, ex-NOAA. 
+                  SFSU, Knowledgegraph expert, AI-bioinformatics, ex-Berkeley Lab, ex-NOAA.
                   Experienced journal editor and 10+ years experience in scientific publishing.
                 </p>
               </CardContent>
@@ -244,7 +244,7 @@ export default function AboutPage() {
           <h2 className="font-display text-display-md font-bold mb-12">
             Our Values
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="text-left">
               <h3 className="font-display text-2xl font-bold mb-4">Transparency</h3>
@@ -252,21 +252,21 @@ export default function AboutPage() {
                 We believe in open processes, clear communication, and accountability in all aspects of our operation.
               </p>
             </div>
-            
+
             <div className="text-left">
               <h3 className="font-display text-2xl font-bold mb-4">Innovation</h3>
               <p className="text-lg opacity-90">
                 We continuously explore new technologies and approaches to improve scientific publishing.
               </p>
             </div>
-            
+
             <div className="text-left">
               <h3 className="font-display text-2xl font-bold mb-4">Inclusivity</h3>
               <p className="text-lg opacity-90">
                 We strive to create a platform that welcomes diverse perspectives, backgrounds, and ideas.
               </p>
             </div>
-            
+
             <div className="text-left">
               <h3 className="font-display text-2xl font-bold mb-4">Scientific Integrity</h3>
               <p className="text-lg opacity-90">
@@ -321,4 +321,4 @@ export default function AboutPage() {
       </section>
     </div>
   )
-} 
+}
