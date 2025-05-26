@@ -1,6 +1,6 @@
-# Agentis Biology - Neobrutalist Scientific Journal
+# Scientific Publishing with Agentis
 
-A peer-reviewed, AI-assisted, open-access journal built with Next.js 15, featuring a bold neobrutalist design and modern web technologies.
+A peer-reviewed, human-assisted, open-access journal built with Next.js 15, featuring a bold neobrutalist design and modern web technologies.
 
 ## 🚀 Features
 
