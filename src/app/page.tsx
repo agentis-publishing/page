@@ -47,15 +47,18 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Agentis Main Card */}
-            <Link href="/about" className="block">
+            <Link href="/agentis-coming-soon" className="block">
               <div className="p-8 border-4 border-black bg-yellow-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">🔬</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS</h3>
-                <p className="text-black text-sm mb-6 leading-relaxed">
-                  General scientific research across all disciplines.
+                <p className="text-black text-sm mb-4 leading-relaxed">
+                  The flagship journal of Agentis Science. General scientific research across all disciplines.
                 </p>
+                <div className="inline-block px-3 py-1 bg-red-500 text-white font-bold text-xs uppercase tracking-wider mb-2">
+                  COMING SOON
+                </div>
                 <div className="inline-block px-4 py-2 bg-black text-white font-bold text-xs uppercase tracking-wider">
-                  EXPLORE →
+                  LEARN MORE →
                 </div>
               </div>
             </Link>
