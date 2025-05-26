@@ -17,7 +17,7 @@ export function Navigation() {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="font-display text-2xl font-bold py-4 text-black hover:text-accent transition-colors">
-            Agentis Biology
+            Agentis
           </Link>
 
           {/* Desktop Navigation */}

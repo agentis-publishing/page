@@ -37,11 +37,11 @@ export function PaperCard({ paper, showMetrics = false }: PaperCardProps) {
             {formatDate(paper.created_at)}
           </span>
         </div>
-        
+
         <h3 className="font-display text-xl font-bold mb-3 line-clamp-2">
           {paper.title}
         </h3>
-        
+
         <p className="text-gray-600 mb-4 line-clamp-3 text-sm leading-relaxed">
           {paper.abstract}
         </p>
@@ -93,11 +93,11 @@ export function PaperCard({ paper, showMetrics = false }: PaperCardProps) {
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1" href={`/articles/${paper.id}`}>
+          <Button variant="outline" size="sm" className="flex-1" href="/article-not-found">
             READ MORE →
           </Button>
           {paper.status === 'published' && (
-            <Button variant="ghost" size="sm" href={`/articles/${paper.id}/download`}>
+            <Button variant="ghost" size="sm" href="/article-not-found">
               📄 PDF
             </Button>
           )}
@@ -105,4 +105,4 @@ export function PaperCard({ paper, showMetrics = false }: PaperCardProps) {
       </CardContent>
     </Card>
   )
-} 
+}

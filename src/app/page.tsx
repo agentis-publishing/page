@@ -26,8 +26,14 @@ export default function HomePage() {
             </div>
 
             <div className="flex justify-center lg:justify-end">
-              <div className="w-48 h-48 border-4 border-black bg-accent shadow-[8px_8px_0px_#000] flex items-center justify-center rotating">
-                <div className="text-white font-display font-bold text-4xl">AS</div>
+              <div className="w-48 h-48 border-4 border-black bg-white shadow-[8px_8px_0px_#000] flex items-center justify-center rotating p-4">
+                <img
+                  src="/page/logo.png"
+                  alt="Agentis Science Logo"
+                  width={160}
+                  height={160}
+                  className="object-contain"
+                />
               </div>
             </div>
           </div>

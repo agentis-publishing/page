@@ -26,7 +26,7 @@ export default function ContactPage() {
               <h2 className="font-display text-display-md font-bold mb-8 border-b-3 border-accent pb-2 inline-block">
                 Send us a Message
               </h2>
-              
+
               <Card>
                 <CardContent className="p-8">
                   <form className="space-y-6">
@@ -34,24 +34,24 @@ export default function ContactPage() {
                       <label className="block font-bold text-sm mb-2">
                         YOUR NAME *
                       </label>
-                      <Input 
-                        type="text" 
+                      <Input
+                        type="text"
                         placeholder="Enter your name"
                         required
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block font-bold text-sm mb-2">
                         YOUR EMAIL *
                       </label>
-                      <Input 
-                        type="email" 
+                      <Input
+                        type="email"
                         placeholder="Enter your email address"
                         required
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block font-bold text-sm mb-2">
                         SUBJECT *
@@ -66,18 +66,18 @@ export default function ContactPage() {
                         <option>Press Inquiry</option>
                       </select>
                     </div>
-                    
+
                     <div>
                       <label className="block font-bold text-sm mb-2">
                         MESSAGE *
                       </label>
-                      <textarea 
+                      <textarea
                         className="w-full px-4 py-3 bg-white border-3 border-black font-mono text-base focus:outline-none focus:shadow-neo-sm transition-shadow duration-150 min-h-32"
                         placeholder="Enter your message"
                         required
                       />
                     </div>
-                    
+
                     <Button type="submit" size="lg" className="w-full">
                       Send Message
                     </Button>
@@ -91,7 +91,7 @@ export default function ContactPage() {
               <h2 className="font-display text-display-md font-bold mb-8 border-b-3 border-accent pb-2 inline-block">
                 Get in Touch
               </h2>
-              
+
               <div className="space-y-8">
                 <Card>
                   <CardHeader>
@@ -102,7 +102,7 @@ export default function ContactPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-700 mb-2">
-                      <strong>contact@agentisbiology.org</strong>
+                      <strong>info@agentis.science</strong>
                     </p>
                     <p className="text-gray-700">
                       For general inquiries and support
@@ -119,7 +119,7 @@ export default function ContactPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-700 mb-2">
-                      <strong>editors@agentisbiology.org</strong>
+                      <strong>info@agentis.science</strong>
                     </p>
                     <p className="text-gray-700">
                       For manuscript submissions and editorial inquiries
@@ -136,10 +136,27 @@ export default function ContactPage() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-700 mb-2">
-                      <strong>support@agentisbiology.org</strong>
+                      <strong>info@agentis.science</strong>
                     </p>
                     <p className="text-gray-700">
                       For technical assistance and account help
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <div className="w-16 h-16 bg-accent border-3 border-black flex items-center justify-center mb-4">
+                      <span className="text-white font-bold text-2xl">📍</span>
+                    </div>
+                    <CardTitle>Location</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-700 mb-2">
+                      <strong>Berkeley, San Francisco Bay Area</strong>
+                    </p>
+                    <p className="text-gray-700">
+                      California, United States
                     </p>
                   </CardContent>
                 </Card>
@@ -155,7 +172,7 @@ export default function ContactPage() {
           <h2 className="font-display text-display-md font-bold mb-12 border-b-3 border-accent pb-2 inline-block">
             Connect With Us
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card>
               <CardHeader>
@@ -218,4 +235,4 @@ export default function ContactPage() {
       </section>
     </div>
   )
-} 
+}
