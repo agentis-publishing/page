@@ -246,7 +246,7 @@ export default function HomePage() {
               <Button size="lg" variant="secondary" href="/submit-paper">
                 SUBMIT YOUR RESEARCH
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent" href="/contact">
+              <Button size="lg" variant="outline" className="border-white text-black bg-white hover:bg-white hover:text-accent" href="/contact">
                 GET IN TOUCH
               </Button>
             </div>
