@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/neo/Button'
 
 export default function AgentisComingSoon() {
   return (
@@ -97,7 +97,7 @@ export default function AgentisComingSoon() {
             <div className="text-5xl mb-6">🚀</div>
             <h3 className="font-display text-2xl font-bold mb-6">LAUNCHING 2024</h3>
             <p className="text-lg leading-relaxed mb-8">
-              We're putting the finishing touches on our flagship journal.
+              We&apos;re putting the finishing touches on our flagship journal.
               Agentis will launch with a comprehensive platform for submitting,
               reviewing, and publishing groundbreaking scientific research.
             </p>
