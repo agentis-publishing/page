@@ -5,9 +5,9 @@ export default function AgentisComingSoon() {
   return (
     <div className="min-h-screen bg-light-gray">
       {/* Hero Section */}
-      <section className="py-20 px-6 md:px-8 bg-yellow-400">
+      <section className="py-20 px-6 md:px-8 bg-purple-400">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-12 border-4 border-black bg-yellow-400 shadow-[8px_8px_0px_#000]">
+          <div className="p-12 border-4 border-black bg-purple-400 shadow-[8px_8px_0px_#000]">
             <div className="text-6xl mb-8">🔬</div>
             <h1 className="font-display text-5xl md:text-6xl font-black mb-6 text-black">
               AGENTIS
@@ -19,8 +19,8 @@ export default function AgentisComingSoon() {
               The Flagship Journal of Agentis Science
             </p>
             <p className="text-lg text-black/80 leading-relaxed max-w-2xl mx-auto">
-              Our premier publication for groundbreaking scientific research across all disciplines. 
-              From physics and chemistry to biology and beyond, Agentis will be your gateway to 
+              Our premier publication for groundbreaking scientific research across all disciplines.
+              From physics and chemistry to biology and beyond, Agentis will be your gateway to
               the most innovative discoveries in science.
             </p>
           </div>
@@ -33,7 +33,7 @@ export default function AgentisComingSoon() {
           <h2 className="font-display text-4xl font-bold mb-16 text-center">
             WHAT TO EXPECT
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="p-8 border-4 border-black bg-light-gray shadow-[4px_4px_0px_#000]">
               <div className="text-4xl mb-4">🌟</div>
@@ -92,13 +92,13 @@ export default function AgentisComingSoon() {
           <h2 className="font-display text-4xl font-bold mb-16">
             LAUNCH TIMELINE
           </h2>
-          
+
           <div className="p-10 border-4 border-white bg-accent shadow-[6px_6px_0px_#fff]">
             <div className="text-5xl mb-6">🚀</div>
             <h3 className="font-display text-2xl font-bold mb-6">LAUNCHING 2024</h3>
             <p className="text-lg leading-relaxed mb-8">
-              We're putting the finishing touches on our flagship journal. 
-              Agentis will launch with a comprehensive platform for submitting, 
+              We're putting the finishing touches on our flagship journal.
+              Agentis will launch with a comprehensive platform for submitting,
               reviewing, and publishing groundbreaking scientific research.
             </p>
             <div className="space-y-4">
@@ -124,21 +124,21 @@ export default function AgentisComingSoon() {
       </section>
 
       {/* Stay Updated Section */}
-      <section className="py-20 px-6 md:px-8 bg-yellow-400">
+      <section className="py-20 px-6 md:px-8 bg-purple-400">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="p-12 border-4 border-black bg-yellow-400 shadow-[6px_6px_0px_#000]">
+          <div className="p-12 border-4 border-black bg-purple-400 shadow-[6px_6px_0px_#000]">
             <h2 className="font-display text-4xl font-bold mb-8 text-black">
               STAY UPDATED
             </h2>
             <p className="text-xl text-black mb-12">
-              Want to be notified when Agentis launches? 
+              Want to be notified when Agentis launches?
               Follow our progress and be among the first to submit your research.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" variant="secondary" href="/contact">
                 GET NOTIFIED
               </Button>
-              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-yellow-400" href="/">
+              <Button size="lg" variant="outline" className="border-black text-black hover:bg-black hover:text-purple-400" href="/">
                 EXPLORE OTHER JOURNALS
               </Button>
             </div>
@@ -152,10 +152,10 @@ export default function AgentisComingSoon() {
           <h2 className="font-display text-4xl font-bold mb-16 text-center">
             MEANWHILE, EXPLORE OUR ACTIVE JOURNALS
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Link href="/agentis-biology" className="block">
-              <div className="p-8 border-4 border-black bg-blue-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-orange-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">🧬</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS BIOLOGY</h3>
                 <p className="text-black text-sm mb-6 leading-relaxed">
@@ -168,7 +168,7 @@ export default function AgentisComingSoon() {
             </Link>
 
             <Link href="/agentis-datasets" className="block">
-              <div className="p-8 border-4 border-black bg-orange-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
+              <div className="p-8 border-4 border-black bg-blue-400 shadow-[6px_6px_0px_#000] hover:shadow-[8px_8px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-150 cursor-pointer">
                 <div className="text-4xl mb-4">📊</div>
                 <h3 className="font-display text-xl font-bold mb-4 text-black">AGENTIS SCIENCE DATA</h3>
                 <p className="text-black text-sm mb-6 leading-relaxed">
