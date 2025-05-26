@@ -111,6 +111,7 @@ This project is configured for automatic deployment to GitHub Pages:
 1. **Automatic Deployment**: Pushes to `main` branch trigger automatic deployment
 2. **Live Site**: https://agentis-publishing.github.io/page/
 3. **Custom Domain**: Configured for agentis.science (if DNS is set up)
+4. **Configuration**: Ensure GitHub Pages source is set to "GitHub Actions" in repository settings
 
 #### Manual Deployment
 ```bash
