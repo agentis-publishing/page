@@ -37,14 +37,14 @@ A peer-reviewed, AI-assisted, open-access journal built with Next.js 15, featuri
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Edit `.env.local` with your configuration:
    ```env
    # Supabase Configuration
    NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
    SUPABASE_SERVICE_KEY=your-service-key
-   
+
    # Site Configuration
    NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```
@@ -102,25 +102,36 @@ src/
 
 ## 🚀 Deployment
 
-### Cloudflare Pages (Recommended)
+### GitHub Pages (Current Setup)
 
+This project is configured for automatic deployment to GitHub Pages:
+
+1. **Automatic Deployment**: Pushes to `main` branch trigger automatic deployment
+2. **Live Site**: https://agentis-publishing.github.io/page/
+3. **Custom Domain**: Configured for agentis.science (if DNS is set up)
+
+#### Manual Deployment
+```bash
+npm run build    # Build the static export
+npm run deploy   # Create .nojekyll file for GitHub Pages
+```
+
+### Alternative Deployment Options
+
+#### Vercel (Recommended for production)
+1. **Connect your repository** to Vercel
+2. **Set environment variables** in the Vercel dashboard
+3. **Deploy** automatically on push to main branch
+
+#### Cloudflare Pages
 1. **Build the project**
    ```bash
    npm run build
    ```
-
 2. **Deploy to Cloudflare Pages**
    ```bash
    npx wrangler pages deploy out --project-name agentis-science
    ```
-
-3. **Set environment variables** in the Cloudflare dashboard
-
-### Vercel
-
-1. **Connect your repository** to Vercel
-2. **Set environment variables** in the Vercel dashboard
-3. **Deploy** automatically on push to main branch
 
 ## 🔧 Development
 
