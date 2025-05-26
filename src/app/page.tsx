@@ -41,7 +41,7 @@ export default function HomePage() {
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
               CHOOSE YOUR JOURNAL
             </h2>
-            <p className="text-gray-600 text-lg">Select the journal that best fits your research</p>
+            <p className="text-gray-600 text-lg">Select the journal that best fits your research needs</p>
           </div>
 
           <div className="max-w-4xl mx-auto">
