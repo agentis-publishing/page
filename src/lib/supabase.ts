@@ -8,12 +8,18 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 // Create a safer client that handles static builds
 const createSafeClient = () => {
-  // If we're in a static export on the server, return a mock client
-  if (typeof window === 'undefined' && process.env.STATIC_EXPORT === '1') {
+  // If we're in a build environment or missing env vars, return a mock client
+  if (typeof window === 'undefined' || !supabaseUrl || !supabaseAnonKey) {
     return {
       auth: {
         getUser: () => Promise.resolve({ data: { user: null }, error: null }),
         getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+        signInWithPassword: () => Promise.resolve({ data: { user: null, session: null }, error: null }),
+        signUp: () => Promise.resolve({ data: { user: null, session: null }, error: null }),
+        signOut: () => Promise.resolve({ error: null }),
+        resetPasswordForEmail: () => Promise.resolve({ error: null }),
+        updateUser: () => Promise.resolve({ data: { user: null }, error: null }),
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
       },
       from: () => ({
         select: () => ({
@@ -21,6 +27,9 @@ const createSafeClient = () => {
             single: () => Promise.resolve({ data: null, error: null }),
           }),
         }),
+        insert: () => Promise.resolve({ data: null, error: null }),
+        update: () => Promise.resolve({ data: null, error: null }),
+        upsert: () => Promise.resolve({ data: null, error: null }),
       }),
       functions: {
         invoke: () => Promise.resolve({ data: null, error: null }),
@@ -36,19 +45,15 @@ const createSafeClient = () => {
       env: process.env.NODE_ENV,
       url: supabaseUrl.substring(0, 8) + '...' // Log just the beginning for security
     });
-    
-    // Warn if environment variables are missing
-    if (!supabaseUrl || !supabaseAnonKey) {
-      console.error('Missing Supabase environment variables!', {
-        hasUrl: !!supabaseUrl,
-        hasKey: !!supabaseAnonKey
-      });
-    }
   }
   
   // Get current site URL for redirects
   const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
-  console.log('Using site URL for auth redirects:', siteUrl);
+  
+  // Only log in browser to avoid build-time console output
+  if (typeof window !== 'undefined' && siteUrl) {
+    console.log('Using site URL for auth redirects:', siteUrl);
+  }
   
   // Create the real client for runtime
   return createClient(supabaseUrl, supabaseAnonKey, {
