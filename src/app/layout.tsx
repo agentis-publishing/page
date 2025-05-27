@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navigation } from "@/components/ui/Navigation";
 import Link from "next/link";
+import { AuthProvider } from "@/context/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Agentis Science - Open Access Scientific Publishing Platform",
@@ -33,10 +34,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="font-body antialiased">
-        <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <AuthProvider>
+          <Navigation />
+          <main className="min-h-screen">
+            {children}
+          </main>
         <footer className="bg-black text-white py-12 px-4 md:px-8 border-t-4 border-black">
           <div className="max-w-7xl mx-auto text-center">
             <div className="font-display font-black text-2xl mb-4">
@@ -56,6 +58,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </AuthProvider>
       </body>
     </html>
   );
