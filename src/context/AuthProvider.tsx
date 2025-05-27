@@ -71,16 +71,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Subscribe to auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event: string, session: Session | null) => {
-        console.log(`Auth event: ${event}`);
+        console.log(`🔄 Auth state change event: ${event}`, {
+          hasSession: !!session,
+          userEmail: session?.user?.email,
+          userId: session?.user?.id
+        });
         
         // Always update the session and user state immediately
         setSession(session);
         setUser(session?.user || null);
         
         if (session?.user) {
+          console.log('👤 User found in session, fetching profile...');
           // Trigger profile fetch for any auth event with a user
           await fetchUserProfile(session.user.id);
         } else {
+          console.log('👤 No user in session, clearing profile...');
           setProfile(null);
         }
         
@@ -88,9 +94,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         
         // Force redirect for auth changes instead of just refreshing
         if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+          console.log('🔄 Redirecting to dashboard after auth success...');
           router.push('/dashboard');
         }
         if (event === 'SIGNED_OUT') {
+          console.log('🔄 Redirecting to home after sign out...');
           router.push('/');
         }
       }
@@ -168,10 +176,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Sign in with email and password
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      console.log('🔐 AuthProvider: Attempting sign in with Supabase...');
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      console.log('🔐 AuthProvider: Sign in response:', { 
+        hasUser: !!data?.user, 
+        userEmail: data?.user?.email,
+        hasSession: !!data?.session,
+        hasError: !!error, 
+        errorMessage: error?.message 
+      });
       return { error };
     } catch (error) {
-      console.error('Sign in error:', error);
+      console.error('❌ AuthProvider: Sign in error:', error);
       return { error: error as Error };
     }
   };

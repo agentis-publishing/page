@@ -73,12 +73,23 @@ const createSafeClient = () => {
   
   // Enhanced debugging for environment variables (only in browser console)
   if (typeof window !== 'undefined') {
-    console.log('Supabase Client Init:', { 
+    console.log('🔧 Supabase Client Debug Info:', { 
       hasUrl: !!supabaseUrl, 
       hasKey: !!supabaseAnonKey,
       env: process.env.NODE_ENV,
-      url: supabaseUrl ? supabaseUrl.substring(0, 8) + '...' : 'not set' // Log just the beginning for security
+      url: supabaseUrl ? supabaseUrl.substring(0, 30) + '...' : 'NOT SET',
+      keyPrefix: supabaseAnonKey ? supabaseAnonKey.substring(0, 20) + '...' : 'NOT SET',
+      origin: window.location.origin
     });
+    
+    if (supabaseUrl && supabaseAnonKey) {
+      console.log('✅ Supabase environment variables are properly loaded');
+    } else {
+      console.error('❌ Missing Supabase environment variables:', {
+        url: !!supabaseUrl,
+        key: !!supabaseAnonKey
+      });
+    }
   }
   
   // Get current site URL for redirects

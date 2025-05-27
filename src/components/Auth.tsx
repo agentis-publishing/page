@@ -36,15 +36,22 @@ export default function Auth() {
     setLoading(true);
     setError(null);
     
+    console.log('🔐 Starting sign in process...');
+    
     try {
       const { error } = await signIn(email, password);
+      console.log('🔐 Sign in response:', { hasError: !!error, error });
+      
       if (error) throw error;
+      
       setMessage('Success! Redirecting...');
+      console.log('✅ Sign in successful, redirecting to dashboard...');
       
       setTimeout(() => {
         router.push('/dashboard');
       }, 1500);
     } catch (err) {
+      console.error('❌ Sign in error:', err);
       setError((err as Error).message || 'An error occurred during sign in');
     } finally {
       setLoading(false);
