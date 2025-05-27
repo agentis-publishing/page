@@ -8,8 +8,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 // Create a safer client that handles static builds
 const createSafeClient = () => {
-  // If we're in a build environment or missing env vars, return a mock client
-  if (typeof window === 'undefined' || !supabaseUrl || !supabaseAnonKey) {
+  // If we're in a build environment, return a mock client
+  if (typeof window === 'undefined') {
     return {
       auth: {
         getUser: () => Promise.resolve({ data: { user: null }, error: null }),
@@ -37,13 +37,47 @@ const createSafeClient = () => {
     } as unknown as ReturnType<typeof createClient>;
   }
   
+  // Check for missing env vars on client side
+  if (typeof window !== 'undefined' && (!supabaseUrl || !supabaseAnonKey)) {
+    console.error('⚠️ Supabase environment variables are missing!');
+    console.error('Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Cloudflare Pages environment variables.');
+    
+    // Return a mock client that shows proper error messages
+    const envError = new Error('Supabase environment variables are not configured. Please contact the administrator.');
+    return {
+      auth: {
+        getUser: () => Promise.resolve({ data: { user: null }, error: envError }),
+        getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+        signInWithPassword: () => Promise.resolve({ data: { user: null, session: null }, error: envError }),
+        signUp: () => Promise.resolve({ data: { user: null, session: null }, error: envError }),
+        signOut: () => Promise.resolve({ error: envError }),
+        resetPasswordForEmail: () => Promise.resolve({ error: envError }),
+        updateUser: () => Promise.resolve({ data: { user: null }, error: envError }),
+        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+      },
+      from: () => ({
+        select: () => ({
+          eq: () => ({
+            single: () => Promise.resolve({ data: null, error: envError }),
+          }),
+        }),
+        insert: () => Promise.resolve({ data: null, error: envError }),
+        update: () => Promise.resolve({ data: null, error: envError }),
+        upsert: () => Promise.resolve({ data: null, error: envError }),
+      }),
+      functions: {
+        invoke: () => Promise.resolve({ data: null, error: envError }),
+      },
+    } as unknown as ReturnType<typeof createClient>;
+  }
+  
   // Enhanced debugging for environment variables (only in browser console)
   if (typeof window !== 'undefined') {
     console.log('Supabase Client Init:', { 
       hasUrl: !!supabaseUrl, 
       hasKey: !!supabaseAnonKey,
       env: process.env.NODE_ENV,
-      url: supabaseUrl.substring(0, 8) + '...' // Log just the beginning for security
+      url: supabaseUrl ? supabaseUrl.substring(0, 8) + '...' : 'not set' // Log just the beginning for security
     });
   }
   
