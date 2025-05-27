@@ -66,27 +66,26 @@ export default function DashboardPage() {
         public_email: profile.public_email || ''
       });
       
+      // Load settings inline
+      const loadSettings = async () => {
+        try {
+          const { data } = await supabase
+            .from('user_settings')
+            .select('*')
+            .eq('user_id', user.id)
+            .single();
+          
+          if (data) {
+            setSettings(data);
+          }
+        } catch (error) {
+          console.error('Error loading settings:', error);
+        }
+      };
+      
       loadSettings();
     }
   }, [user, profile]);
-
-  const loadSettings = async () => {
-    if (!user) return;
-    
-    try {
-      const { data, error } = await supabase
-        .from('user_settings')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-      
-      if (data) {
-        setSettings(data);
-      }
-    } catch (error) {
-      console.error('Error loading settings:', error);
-    }
-  };
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,8 +98,8 @@ export default function DashboardPage() {
       if (error) throw error;
       
       setSuccess('Profile updated successfully!');
-    } catch (err: any) {
-      setError(err.message || 'Failed to update profile');
+    } catch (err) {
+      setError((err as Error).message || 'Failed to update profile');
     } finally {
       setLoading(false);
     }
@@ -123,8 +122,8 @@ export default function DashboardPage() {
       if (error) throw error;
       
       setSuccess('Settings updated successfully!');
-    } catch (err: any) {
-      setError(err.message || 'Failed to update settings');
+    } catch (err) {
+      setError((err as Error).message || 'Failed to update settings');
     } finally {
       setLoading(false);
     }

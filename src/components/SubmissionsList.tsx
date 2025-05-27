@@ -11,8 +11,8 @@ type Submission = {
 
 const SubmissionsList = () => {
   // This would normally be fetched from an API
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [submissions] = useState<Submission[]>([]);
+  const [isLoading] = useState(false);
 
   const getStatusBadge = (status: Submission['status']) => {
     const baseClasses = "px-2 py-1 rounded-full text-xs font-medium";

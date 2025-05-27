@@ -11,12 +11,12 @@ interface AuthContextType {
   session: Session | null;
   profile: UserProfile | null;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, userData: Partial<UserProfile>) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signUp: (email: string, password: string, userData: Partial<UserProfile>) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<{ error: any }>;
-  updatePassword: (password: string) => Promise<{ error: any }>;
-  updateProfile: (data: Partial<UserProfile>) => Promise<{ error: any }>;
+  resetPassword: (email: string) => Promise<{ error: Error | null }>;
+  updatePassword: (password: string) => Promise<{ error: Error | null }>;
+  updateProfile: (data: Partial<UserProfile>) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -172,7 +172,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { error };
     } catch (error) {
       console.error('Sign in error:', error);
-      return { error };
+      return { error: error as Error };
     }
   };
 
@@ -214,7 +214,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const identities = data?.user?.identities as { length: number }[] | undefined;
       if (identities?.length === 0) {
         console.error('User already exists but is not confirmed');
-        return { error: { message: 'This email is already registered but not confirmed. Please check your email for the confirmation link or try resetting your password.' } };
+        return { error: new Error('This email is already registered but not confirmed. Please check your email for the confirmation link or try resetting your password.') };
       }
       
       // Check response for debugging
@@ -254,7 +254,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { error: null };
     } catch (error) {
       console.error('Sign up error:', error);
-      return { error };
+      return { error: error as Error };
     }
   };
 
@@ -267,7 +267,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { error };
     } catch (error) {
       console.error('Password reset error:', error);
-      return { error };
+      return { error: error as Error };
     }
   };
   
@@ -278,7 +278,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { error };
     } catch (error) {
       console.error('Password update error:', error);
-      return { error };
+      return { error: error as Error };
     }
   };
 
@@ -288,7 +288,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('Sign out timeout')), 3000));
     try {
       const result = await Promise.race([supabase.auth.signOut(), timeout]);
-      const error = result instanceof Error ? result : (result as { error: any }).error;
+      const error = result instanceof Error ? result : (result as { error: Error | null }).error;
       if (error) {
         console.error('Supabase sign out error:', error);
       } else {
@@ -308,7 +308,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Update user profile
   const updateProfile = async (data: Partial<UserProfile>) => {
-    if (!user) return { error: 'Not authenticated' };
+    if (!user) return { error: new Error('Not authenticated') };
     
     try {
       const { error } = await supabase
@@ -323,7 +323,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return { error };
     } catch (error) {
       console.error('Profile update error:', error);
-      return { error };
+      return { error: error as Error };
     }
   };
 

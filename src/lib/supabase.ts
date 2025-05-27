@@ -25,7 +25,7 @@ const createSafeClient = () => {
       functions: {
         invoke: () => Promise.resolve({ data: null, error: null }),
       },
-    } as any;
+    } as unknown as ReturnType<typeof createClient>;
   }
   
   // Enhanced debugging for environment variables (only in browser console)

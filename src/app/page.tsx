@@ -1,5 +1,6 @@
 import { Button } from "@/components/neo/Button"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function HomePage() {
   return (
@@ -27,7 +28,7 @@ export default function HomePage() {
 
             <div className="flex justify-center lg:justify-end">
               <div className="w-48 h-48 border-4 border-black bg-white shadow-[8px_8px_0px_#000] flex items-center justify-center rotating p-4">
-                <img
+                <Image
                   src="/logo.png"
                   alt="Agentis Science Logo"
                   width={160}

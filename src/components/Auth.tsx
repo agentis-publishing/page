@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthProvider';
 import { Button } from '@/components/neo/Button';
@@ -10,7 +10,7 @@ type AuthMode = 'signin' | 'signup' | 'forgot';
 
 export default function Auth() {
   const router = useRouter();
-  const { signIn, signUp, resetPassword, isLoading: authLoading } = useAuth();
+  const { signIn, signUp, resetPassword } = useAuth();
   const [mode, setMode] = useState<AuthMode>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,8 +44,8 @@ export default function Auth() {
       setTimeout(() => {
         router.push('/dashboard');
       }, 1500);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during sign in');
+    } catch (err) {
+      setError((err as Error).message || 'An error occurred during sign in');
     } finally {
       setLoading(false);
     }
@@ -77,13 +77,14 @@ export default function Auth() {
       
       setMessage('Success! Check your email for the confirmation link.');
       resetForm();
-    } catch (err: any) {
-      if (err.message.includes('row-level security')) {
+    } catch (err) {
+      const errMsg = (err as Error).message;
+      if (errMsg.includes('row-level security')) {
         setError('Registration issue: Profile creation failed due to permissions. Please contact support.');
-      } else if (err.message.includes('already registered')) {
+      } else if (errMsg.includes('already registered')) {
         setError('This email is already registered. Try signing in instead.');
       } else {
-        setError(err.message || 'An error occurred during sign up');
+        setError(errMsg || 'An error occurred during sign up');
       }
     } finally {
       setLoading(false);
@@ -101,8 +102,8 @@ export default function Auth() {
       
       setMessage('Check your email for the password reset link!');
       resetForm();
-    } catch (err: any) {
-      setError(err.message || 'An error occurred during password reset');
+    } catch (err) {
+      setError((err as Error).message || 'An error occurred during password reset');
     } finally {
       setLoading(false);
     }
