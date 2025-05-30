@@ -31,8 +31,8 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
   
   useEffect(() => {
     // Set the initial URL on client side to avoid hydration issues
-    // Use jsDelivr as primary since raw.githubusercontent.com blocks iframes
-    setCurrentUrl(cdnUrls.jsdelivr)
+    // Use GitHack as primary since it serves HTML with proper content type
+    setCurrentUrl(cdnUrls.githack)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [htmlUrl])
@@ -95,11 +95,11 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
                 console.error('Iframe loading error:', e)
                 // Try alternative URLs in sequence
                 const iframe = e.currentTarget as HTMLIFrameElement
-                if (iframe.src === cdnUrls.jsdelivr) {
-                  setCurrentUrl(cdnUrls.githack)
-                } else if (iframe.src === cdnUrls.githack) {
+                if (iframe.src === cdnUrls.githack) {
                   setCurrentUrl(cdnUrls.direct)
                 } else if (iframe.src === cdnUrls.direct) {
+                  setCurrentUrl(cdnUrls.jsdelivr)
+                } else if (iframe.src === cdnUrls.jsdelivr) {
                   setCurrentUrl(cdnUrls.raw)
                 }
               }}
@@ -116,7 +116,7 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
                 style={{ height: '1200px' }}
               >
                 <embed 
-                  src={cdnUrls.jsdelivr} 
+                  src={cdnUrls.githack} 
                   type="text/html"
                   className="w-full"
                   style={{ height: '1200px' }}
@@ -139,12 +139,12 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
               Open in GitHub Pages
             </a>
             <a 
-              href={cdnUrls.raw} 
+              href={cdnUrls.githack} 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline"
             >
-              Open Raw File
+              Open via GitHack
             </a>
           </div>
         </div>
