@@ -1,5 +1,4 @@
-import { Card } from '@/components/neo/Card'
-import { Button } from '@/components/neo/Button'
+import { ArticleViewer } from '@/components/ArticleViewer'
 
 interface ArticlePageProps {
   params: Promise<{
@@ -39,63 +38,29 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     return (
       <div className="min-h-screen bg-gray-100 py-12 px-4">
         <div className="max-w-4xl mx-auto">
-          <Card className="p-8 text-center">
+          <div className="p-8 text-center bg-white border-4 border-black shadow-neo">
             <h1 className="font-display text-3xl font-bold mb-4 text-red-600">
               Article Not Found
             </h1>
             <p className="text-gray-600 mb-6">The requested article could not be found.</p>
-            <Button href="/browse-issues">Back to Browse</Button>
-          </Card>
+            <a 
+              href="/browse-issues"
+              className="inline-flex items-center justify-center font-bold uppercase tracking-wider transition-all duration-150 border-3 border-black active:translate-x-1 active:translate-y-1 disabled:pointer-events-none disabled:opacity-50 bg-white text-black border-black shadow-neo hover:shadow-neo-hover active:shadow-none hover:bg-light-gray px-6 py-3 text-base"
+            >
+              Back to Browse
+            </a>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Article Header */}
-        <Card className="mb-8">
-          <div className="p-8">
-            <h1 className="font-display text-3xl font-bold mb-4">
-              {article.actualTitle || article.title}
-            </h1>
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
-              <span>Authors: {article.authors.join(', ')}</span>
-            </div>
-            <p className="text-gray-700 leading-relaxed">
-              {article.abstract}
-            </p>
-            <div className="mt-6 flex gap-4">
-              <Button variant="outline" href="/browse-issues">
-                ← Back to Browse
-              </Button>
-              <Button 
-                variant="outline"
-                href={article.htmlUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Original →
-              </Button>
-            </div>
-          </div>
-        </Card>
-
-        {/* Article Content - Full Height Iframe */}
-        <Card className="overflow-hidden" style={{ minHeight: '1200px' }}>
-          <iframe
-            src={article.htmlUrl}
-            className="w-full border-0"
-            style={{ 
-              height: '1200px',
-              minHeight: '100%'
-            }}
-            title={article.actualTitle || article.title}
-            sandbox="allow-same-origin allow-scripts allow-popups"
-          />
-        </Card>
-      </div>
-    </div>
+    <ArticleViewer
+      title={article.actualTitle || article.title}
+      htmlUrl={article.htmlUrl}
+      authors={article.authors}
+      abstract={article.abstract}
+    />
   )
 }
