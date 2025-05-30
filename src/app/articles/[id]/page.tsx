@@ -8,12 +8,19 @@ interface ArticlePageProps {
 }
 
 // Mock article data - in production this would come from a database
-const articlesData: Record<string, { title: string; htmlUrl: string; authors: string[]; abstract: string }> = {
+const articlesData: Record<string, { 
+  title: string; 
+  htmlUrl: string; 
+  authors: string[]; 
+  abstract: string;
+  actualTitle?: string; // The actual title from the HTML document
+}> = {
   'protists-mp': {
-    title: 'Protists Microscopy Project: Exploring Microbial Diversity',
+    title: 'Protists Microscopy Project',
+    actualTitle: 'Protists Microscopy Project', // This should match what's in the HTML
     htmlUrl: 'https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html',
     authors: ['Research Team'],
-    abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles.'
+    abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles. This project presents high-resolution imagery and detailed analysis of various protist communities.'
   }
 }
 
@@ -44,16 +51,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     )
   }
 
-  // For now, we'll embed the article in an iframe
-  // In production, you might want to fetch and parse the HTML server-side
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gray-100">
+      <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Article Header */}
         <Card className="mb-8">
           <div className="p-8">
             <h1 className="font-display text-3xl font-bold mb-4">
-              {article.title}
+              {article.actualTitle || article.title}
             </h1>
             <div className="flex items-center gap-4 text-sm text-gray-600 mb-6">
               <span>Authors: {article.authors.join(', ')}</span>
@@ -61,17 +66,12 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <p className="text-gray-700 leading-relaxed">
               {article.abstract}
             </p>
-          </div>
-        </Card>
-
-        {/* Article Content */}
-        <Card className="overflow-hidden">
-          <div className="p-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-display text-2xl font-bold">Full Article</h2>
+            <div className="mt-6 flex gap-4">
+              <Button variant="outline" href="/browse-issues">
+                ← Back to Browse
+              </Button>
               <Button 
-                variant="outline" 
-                size="sm"
+                variant="outline"
                 href={article.htmlUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -80,24 +80,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </Button>
             </div>
           </div>
-          
-          {/* Iframe to display the article */}
-          <div className="w-full" style={{ height: '800px' }}>
-            <iframe
-              src={article.htmlUrl}
-              className="w-full h-full border-0"
-              title={article.title}
-              sandbox="allow-same-origin allow-scripts"
-            />
-          </div>
         </Card>
 
-        {/* Back to Browse Button */}
-        <div className="mt-8 text-center">
-          <Button variant="outline" href="/browse-issues">
-            ← Back to Browse
-          </Button>
-        </div>
+        {/* Article Content - Full Height Iframe */}
+        <Card className="overflow-hidden" style={{ minHeight: '1200px' }}>
+          <iframe
+            src={article.htmlUrl}
+            className="w-full border-0"
+            style={{ 
+              height: '1200px',
+              minHeight: '100%'
+            }}
+            title={article.actualTitle || article.title}
+            sandbox="allow-same-origin allow-scripts allow-popups"
+          />
+        </Card>
       </div>
     </div>
   )
