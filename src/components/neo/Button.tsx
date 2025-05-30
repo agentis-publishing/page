@@ -56,11 +56,28 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   href?: string
+  target?: string
+  rel?: string
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, href, children, ...props }, ref) => {
+  ({ className, variant, size, href, target, rel, children, ...props }, ref) => {
     if (href) {
+      // For external links, use <a> tag instead of Next.js Link
+      if (href.startsWith('http') || href.startsWith('https')) {
+        return (
+          <a
+            href={href}
+            target={target}
+            rel={rel}
+            className={cn(buttonVariants({ variant, size, className }))}
+          >
+            {children}
+          </a>
+        )
+      }
+      
+      // For internal links, use Next.js Link
       return (
         <Link
           href={href}

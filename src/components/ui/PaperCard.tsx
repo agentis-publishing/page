@@ -20,6 +20,7 @@ interface Paper {
   downloads?: number
   citations?: number
   keywords?: string[]
+  htmlUrl?: string
 }
 
 interface PaperCardProps {
@@ -93,7 +94,14 @@ export function PaperCard({ paper, showMetrics = false }: PaperCardProps) {
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1" href="/article-not-found">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="flex-1" 
+            href={paper.htmlUrl || "/article-not-found"}
+            target={paper.htmlUrl ? "_blank" : undefined}
+            rel={paper.htmlUrl ? "noopener noreferrer" : undefined}
+          >
             READ MORE →
           </Button>
           {paper.status === 'published' && (

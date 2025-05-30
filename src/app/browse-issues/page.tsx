@@ -10,6 +10,21 @@ import { PaperCard } from '@/components/ui/PaperCard'
 const allPapers = [
   {
     id: '1',
+    title: 'Protists Microscopy Project: Exploring Microbial Diversity',
+    abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles. This project presents high-resolution imagery and detailed analysis of various protist communities.',
+    authors: [
+      { name: 'Research Team' }
+    ],
+    status: 'published' as const,
+    created_at: '2024-01-20',
+    views: 342,
+    downloads: 45,
+    citations: 3,
+    keywords: ['protists', 'microscopy', 'microbiology', 'biodiversity'],
+    htmlUrl: 'https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html'
+  },
+  {
+    id: '2',
     title: 'Novel Protein Folding Mechanisms in Extremophile Bacteria',
     abstract: 'This study investigates the unique protein folding pathways observed in thermophilic bacteria, revealing novel mechanisms that could revolutionize our understanding of protein stability under extreme conditions.',
     authors: [
@@ -25,7 +40,7 @@ const allPapers = [
     keywords: ['protein folding', 'extremophiles', 'thermophiles', 'structural biology']
   },
   {
-    id: '2',
+    id: '3',
     title: 'CRISPR-Cas9 Applications in Microbial Genome Engineering',
     abstract: 'A comprehensive review of recent advances in CRISPR-Cas9 technology for precise genome editing in microbial systems, with implications for biotechnology and synthetic biology.',
     authors: [
@@ -40,7 +55,7 @@ const allPapers = [
     keywords: ['CRISPR', 'genome editing', 'microbiology', 'synthetic biology']
   },
   {
-    id: '3',
+    id: '4',
     title: 'RNA-Protein Interactions in Viral Replication Complexes',
     abstract: 'Detailed analysis of RNA-protein interactions within viral replication complexes, providing insights into potential therapeutic targets for antiviral drug development.',
     authors: [
@@ -53,7 +68,7 @@ const allPapers = [
     keywords: ['RNA', 'viral replication', 'protein interactions', 'drug targets']
   },
   {
-    id: '4',
+    id: '5',
     title: 'Metabolic Engineering of E. coli for Enhanced Biofuel Production',
     abstract: 'Engineering metabolic pathways in Escherichia coli to optimize the production of sustainable biofuels through synthetic biology approaches.',
     authors: [
@@ -65,7 +80,7 @@ const allPapers = [
     keywords: ['metabolic engineering', 'biofuels', 'E. coli', 'synthetic biology']
   },
   {
-    id: '5',
+    id: '6',
     title: 'Structural Analysis of Novel Antimicrobial Peptides',
     abstract: 'Comprehensive structural characterization of newly discovered antimicrobial peptides and their mechanisms of action against drug-resistant bacteria.',
     authors: [
@@ -78,7 +93,7 @@ const allPapers = [
     keywords: ['antimicrobial peptides', 'structural biology', 'drug resistance', 'peptide design']
   },
   {
-    id: '6',
+    id: '7',
     title: 'Genomic Diversity in Marine Microorganisms',
     abstract: 'Large-scale genomic analysis revealing unprecedented diversity in marine microbial communities and their ecological roles.',
     authors: [
