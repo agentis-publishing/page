@@ -1,14 +1,55 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/neo/Button'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import type { User } from '@supabase/supabase-js'
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+  const router = useRouter()
+  const supabase = createClientComponentClient()
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+    }
+
+    checkUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [supabase])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
+  }
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    router.push('/')
+  }
+
+  const getUserInitials = (email: string) => {
+    // Try to extract name from email (before @)
+    const name = email.split('@')[0]
+    // Take first two characters or first and last if has separator
+    if (name.includes('.')) {
+      const parts = name.split('.')
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    } else if (name.includes('_')) {
+      const parts = name.split('_')
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    } else {
+      return name.substring(0, 2).toUpperCase()
+    }
   }
 
   return (
@@ -68,9 +109,24 @@ export function Navigation() {
 
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="ghost" size="sm" href="/login">
-              Sign In
-            </Button>
+            {user ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/dashboard"
+                  className="w-10 h-10 border-3 border-black bg-electric-blue text-white font-bold flex items-center justify-center hover:shadow-neo transition-shadow"
+                  title={user.email}
+                >
+                  {getUserInitials(user.email || '')}
+                </Link>
+                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  Sign Out
+                </Button>
+              </div>
+            ) : (
+              <Button variant="ghost" size="sm" href="/login">
+                Sign In
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -141,9 +197,27 @@ export function Navigation() {
                 Contact
               </Link>
               <div className="px-4 py-2">
-                <Button variant="outline" size="sm" href="/login" className="w-full">
-                  Sign In
-                </Button>
+                {user ? (
+                  <div className="space-y-2">
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center gap-3 px-4 py-3 border-3 border-black bg-electric-blue text-white font-bold hover:shadow-neo transition-shadow"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span className="w-8 h-8 border-2 border-white bg-white text-electric-blue flex items-center justify-center">
+                        {getUserInitials(user.email || '')}
+                      </span>
+                      <span className="text-sm">Dashboard</span>
+                    </Link>
+                    <Button variant="outline" size="sm" onClick={handleSignOut} className="w-full">
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <Button variant="outline" size="sm" href="/login" className="w-full">
+                    Sign In
+                  </Button>
+                )}
               </div>
             </div>
           </div>
