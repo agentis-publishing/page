@@ -19,8 +19,8 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
   // Try multiple CDN options for better compatibility
   // For GitHub Pages, the URL should be: https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html
   const cdnUrls = {
-    // Use raw GitHub content URL as primary option
-    raw: htmlUrl.replace('agentis-publishing.github.io/public-testing', 'raw.githubusercontent.com/agentis-publishing/public-testing/main'),
+    // Use raw GitHub content URL as primary option (with refs/heads/ format)
+    raw: htmlUrl.replace('agentis-publishing.github.io/public-testing', 'raw.githubusercontent.com/agentis-publishing/public-testing/refs/heads/main'),
     // jsDelivr CDN
     jsdelivr: `https://cdn.jsdelivr.net/gh/agentis-publishing/public-testing@main/${htmlUrl.split('/public-testing/')[1]}`,
     // GitHack for raw serving
