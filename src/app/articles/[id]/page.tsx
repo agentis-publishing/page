@@ -12,11 +12,9 @@ const articlesData: Record<string, {
   htmlUrl: string; 
   authors: string[]; 
   abstract: string;
-  actualTitle?: string; // The actual title from the HTML document
 }> = {
   'protists-mp': {
     title: 'Protists Microscopy Project',
-    actualTitle: 'Protists Microscopy Project', // This should match what's in the HTML
     htmlUrl: 'https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html',
     authors: ['Research Team'],
     abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles. This project presents high-resolution imagery and detailed analysis of various protist communities.'
@@ -57,7 +55,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <ArticleViewer
-      title={article.actualTitle || article.title}
+      title={article.title}
       htmlUrl={article.htmlUrl}
       authors={article.authors}
       abstract={article.abstract}

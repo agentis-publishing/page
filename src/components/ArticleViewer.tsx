@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card } from '@/components/neo/Card'
 import { Button } from '@/components/neo/Button'
 
@@ -13,6 +13,8 @@ interface ArticleViewerProps {
 
 export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleViewerProps) {
   const [displayMode, setDisplayMode] = useState<'iframe' | 'embed'>('iframe')
+  const [currentUrl, setCurrentUrl] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(true)
   
   // Try multiple CDN options for better compatibility
   // For GitHub Pages, the URL should be: https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html
@@ -26,6 +28,13 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
     // Direct GitHub Pages URL
     direct: htmlUrl
   }
+  
+  useEffect(() => {
+    // Set the initial URL on client side to avoid hydration issues
+    setCurrentUrl(cdnUrls.raw)
+    setIsLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [htmlUrl])
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -66,9 +75,13 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
 
         {/* Article Content */}
         <Card className="overflow-hidden" style={{ minHeight: '1200px' }}>
-          {displayMode === 'iframe' ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center h-96">
+              <p className="text-gray-600">Loading article...</p>
+            </div>
+          ) : displayMode === 'iframe' ? (
             <iframe
-              src={cdnUrls.raw}
+              src={currentUrl}
               className="w-full border-0"
               style={{ 
                 height: '1200px',
@@ -82,11 +95,11 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
                 // Try alternative URLs in sequence
                 const iframe = e.currentTarget as HTMLIFrameElement
                 if (iframe.src === cdnUrls.raw) {
-                  iframe.src = cdnUrls.direct
+                  setCurrentUrl(cdnUrls.direct)
                 } else if (iframe.src === cdnUrls.direct) {
-                  iframe.src = cdnUrls.jsdelivr
+                  setCurrentUrl(cdnUrls.jsdelivr)
                 } else if (iframe.src === cdnUrls.jsdelivr) {
-                  iframe.src = cdnUrls.githack
+                  setCurrentUrl(cdnUrls.githack)
                 }
               }}
             />
@@ -96,7 +109,7 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
                 Loading article content...
               </p>
               <object
-                data={cdnUrls.raw}
+                data={currentUrl}
                 type="text/html"
                 className="w-full"
                 style={{ height: '1200px' }}
