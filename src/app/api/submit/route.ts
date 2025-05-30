@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     const aiReviewOptIn = formData.get('aiReviewOptIn') === 'true'
     
     // Parse arrays
-    const authors = JSON.parse(authorsString)
+    const authors: Array<{ name: string; email: string; orcid: string; affiliation: string }> = JSON.parse(authorsString)
     const keywords = keywordsString.split(',').map(k => k.trim()).filter(k => k)
     
     // Handle supplementary file upload if present
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
       .insert({
         user_id: user.id,
         title,
-        authors: authors.map((author: any) => author.name), // Store only names as string array
+        authors: authors.map(author => author.name), // Store only names as string array
         abstract,
         keywords,
         main_manuscript: mainManuscript,
