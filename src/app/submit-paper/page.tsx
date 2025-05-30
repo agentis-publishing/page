@@ -24,7 +24,8 @@ export default function SubmitPaperPage() {
     manuscriptFile: null as File | null,
     supplementaryFiles: null as File | null,
     coverLetter: '',
-    aiReviewOptIn: true
+    aiReviewOptIn: true,
+    useFileUpload: false // Toggle between text input and file upload
   })
 
   const validateManuscript = (manuscript: string): boolean => {
@@ -35,10 +36,19 @@ export default function SubmitPaperPage() {
 
   const handleNext = () => {
     if (step === 3) {
-      // Validate manuscript sections before proceeding
-      if (!validateManuscript(formData.mainManuscript)) {
-        alert('Your manuscript must include all required sections: Introduction, Methods, Results, Discussion, and Conclusion')
-        return
+      // Validate manuscript based on input method
+      if (!formData.useFileUpload) {
+        // Validate text manuscript sections
+        if (!validateManuscript(formData.mainManuscript)) {
+          alert('Your manuscript must include all required sections: Introduction, Methods, Results, Discussion, and Conclusion')
+          return
+        }
+      } else {
+        // Validate file upload
+        if (!formData.manuscriptFile) {
+          alert('Please upload your manuscript PDF file')
+          return
+        }
       }
     }
     if (step < 4) setStep(step + 1)
@@ -58,6 +68,25 @@ export default function SubmitPaperPage() {
         alert('Please log in to submit a paper')
         router.push('/login')
         return
+      }
+
+      // Handle manuscript PDF upload if using file upload mode
+      let pdfPath = null
+      if (formData.useFileUpload && formData.manuscriptFile && formData.manuscriptFile.size > 0) {
+        const fileExt = formData.manuscriptFile.name.split('.').pop()
+        const fileName = `${user.id}/${Date.now()}_manuscript.${fileExt}`
+        
+        const { error: uploadError } = await supabase.storage
+          .from('manuscript')
+          .upload(fileName, formData.manuscriptFile)
+          
+        if (uploadError) {
+          console.error('Manuscript upload error:', uploadError)
+          alert('Failed to upload manuscript file: ' + uploadError.message)
+          return
+        }
+        
+        pdfPath = fileName
       }
 
       // Handle supplementary file upload if present
@@ -91,11 +120,12 @@ export default function SubmitPaperPage() {
           authors: formData.authors.map(author => author.name), // Store only names as string array
           abstract: formData.abstract,
           keywords: keywords,
-          main_manuscript: formData.mainManuscript,
+          main_manuscript: formData.useFileUpload ? null : formData.mainManuscript,
           manuscript_references: formData.references, // Note: DB column is 'manuscript_references'
           figure_legends: formData.figureLegends,
           cover_letter: formData.coverLetter,
           ai_review_opt_in: formData.aiReviewOptIn,
+          pdf_path: pdfPath,
           supp_path: suppPath,
           status: 'received'
         })
@@ -353,22 +383,81 @@ export default function SubmitPaperPage() {
 
               <CardContent className="space-y-6">
                 <div>
-                  <label className="block font-bold text-sm uppercase tracking-wider mb-2">
-                    MAIN MANUSCRIPT *
-                  </label>
-                  <textarea
-                    value={formData.mainManuscript}
-                    onChange={(e) => setFormData({ ...formData, mainManuscript: e.target.value })}
-                    placeholder="Paste your manuscript text here. Include sections: Introduction, Methods, Results, Discussion, Conclusion"
-                    rows={12}
-                    className="w-full px-4 py-3 bg-white border-4 border-black font-mono text-base
-                             placeholder:text-gray-400 focus:outline-none focus:shadow-neo
-                             transition-shadow duration-150 resize-none"
-                    required
-                  />
-                  <p className="text-sm text-gray-600 mt-2">
-                    Required sections: Introduction, Methods, Results, Discussion, Conclusion
-                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <label className="block font-bold text-sm uppercase tracking-wider">
+                      MAIN MANUSCRIPT *
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, useFileUpload: false })}
+                        className={`px-3 py-1 border-2 border-black font-bold text-xs uppercase ${
+                          !formData.useFileUpload ? 'bg-electric-blue text-white' : 'bg-white text-black'
+                        }`}
+                      >
+                        Paste Text
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, useFileUpload: true })}
+                        className={`px-3 py-1 border-2 border-black font-bold text-xs uppercase ${
+                          formData.useFileUpload ? 'bg-electric-blue text-white' : 'bg-white text-black'
+                        }`}
+                      >
+                        Upload PDF
+                      </button>
+                    </div>
+                  </div>
+
+                  {!formData.useFileUpload ? (
+                    <>
+                      <textarea
+                        value={formData.mainManuscript}
+                        onChange={(e) => setFormData({ ...formData, mainManuscript: e.target.value })}
+                        placeholder="Paste your manuscript text here. Include sections: Introduction, Methods, Results, Discussion, Conclusion"
+                        rows={12}
+                        className="w-full px-4 py-3 bg-white border-4 border-black font-mono text-base
+                                 placeholder:text-gray-400 focus:outline-none focus:shadow-neo
+                                 transition-shadow duration-150 resize-none"
+                        required={!formData.useFileUpload}
+                      />
+                      <p className="text-sm text-gray-600 mt-2">
+                        Required sections: Introduction, Methods, Results, Discussion, Conclusion
+                      </p>
+                    </>
+                  ) : (
+                    <div
+                      className="border-4 border-dashed border-black p-8 text-center
+                               hover:bg-gray-50 transition-colors cursor-pointer relative"
+                    >
+                      <input
+                        type="file"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]
+                          if (file) {
+                            setFormData({ ...formData, manuscriptFile: file })
+                          }
+                        }}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        accept=".pdf,.doc,.docx"
+                        required={formData.useFileUpload}
+                      />
+                      <div className="text-4xl mb-2">📄</div>
+                      <p className="font-bold text-lg mb-1">
+                        {formData.manuscriptFile 
+                          ? formData.manuscriptFile.name 
+                          : 'DROP YOUR MANUSCRIPT HERE'}
+                      </p>
+                      <p className="text-gray-600 mb-3 text-sm">
+                        {formData.manuscriptFile 
+                          ? `Selected: ${(formData.manuscriptFile.size / 1024 / 1024).toFixed(2)} MB`
+                          : 'PDF, DOC, or DOCX files'}
+                      </p>
+                      <Button variant="outline" size="sm" type="button">
+                        CHOOSE FILE
+                      </Button>
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -502,6 +591,16 @@ export default function SubmitPaperPage() {
                     </div>
                     <div>
                       <span className="font-bold">Keywords:</span> {formData.keywords || 'Not provided'}
+                    </div>
+                    <div>
+                      <span className="font-bold">Manuscript:</span> {formData.useFileUpload 
+                        ? (formData.manuscriptFile ? formData.manuscriptFile.name : 'No file selected')
+                        : 'Text provided'}
+                    </div>
+                    <div>
+                      <span className="font-bold">Supplementary Files:</span> {formData.supplementaryFiles 
+                        ? formData.supplementaryFiles.name 
+                        : 'None'}
                     </div>
                     <div>
                       <span className="font-bold">AI Review:</span> {formData.aiReviewOptIn ? 'Yes' : 'No'}
