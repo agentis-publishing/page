@@ -2,23 +2,45 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/neo/Button'
 import { Input } from '@/components/neo/Input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/neo/Card'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function SubmitPaperPage() {
+  const router = useRouter()
+  const supabase = createClientComponentClient()
   const [step, setStep] = useState(1)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
     abstract: '',
     keywords: '',
     authors: [{ name: '', email: '', orcid: '', affiliation: '' }],
+    mainManuscript: '',
+    references: '',
+    figureLegends: '',
     manuscriptFile: null as File | null,
+    supplementaryFiles: null as File | null,
     coverLetter: '',
     aiReviewOptIn: true
   })
 
+  const validateManuscript = (manuscript: string): boolean => {
+    const requiredSections = ['introduction', 'methods', 'results', 'discussion', 'conclusion']
+    const manuscriptLower = manuscript.toLowerCase()
+    return requiredSections.every(section => manuscriptLower.includes(section))
+  }
+
   const handleNext = () => {
+    if (step === 3) {
+      // Validate manuscript sections before proceeding
+      if (!validateManuscript(formData.mainManuscript)) {
+        alert('Your manuscript must include all required sections: Introduction, Methods, Results, Discussion, and Conclusion')
+        return
+      }
+    }
     if (step < 4) setStep(step + 1)
   }
 
@@ -27,9 +49,53 @@ export default function SubmitPaperPage() {
   }
 
   const handleSubmit = async () => {
-    // TODO: Implement submission logic
-    console.log('Submitting paper:', formData)
-    alert('Paper submitted successfully! (Demo)')
+    setIsSubmitting(true)
+    
+    try {
+      // Check if user is authenticated
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        alert('Please log in to submit a paper')
+        router.push('/login')
+        return
+      }
+
+      // Prepare form data
+      const submitData = new FormData()
+      submitData.append('title', formData.title)
+      submitData.append('authors', JSON.stringify(formData.authors))
+      submitData.append('abstract', formData.abstract)
+      submitData.append('keywords', formData.keywords)
+      submitData.append('mainManuscript', formData.mainManuscript)
+      submitData.append('references', formData.references)
+      submitData.append('figureLegends', formData.figureLegends)
+      submitData.append('coverLetter', formData.coverLetter)
+      submitData.append('aiReviewOptIn', formData.aiReviewOptIn.toString())
+      
+      if (formData.supplementaryFiles) {
+        submitData.append('supplementaryFiles', formData.supplementaryFiles)
+      }
+
+      // Submit to API
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        body: submitData
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert(`Paper submitted successfully! Submission ID: ${result.submissionId}`)
+        router.push('/dashboard')
+      } else {
+        alert(result.error || 'Failed to submit paper')
+      }
+    } catch (error) {
+      console.error('Submission error:', error)
+      alert('An error occurred while submitting your paper')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const addAuthor = () => {
@@ -97,7 +163,7 @@ export default function SubmitPaperPage() {
               AUTHORS
             </span>
             <span className={step >= 3 ? 'text-electric-blue' : 'text-gray-400'}>
-              FILES
+              MANUSCRIPT
             </span>
             <span className={step >= 4 ? 'text-electric-blue' : 'text-gray-400'}>
               REVIEW
@@ -254,36 +320,101 @@ export default function SubmitPaperPage() {
             </div>
           )}
 
-          {/* Step 3: File Upload */}
+          {/* Step 3: Manuscript Content */}
           {step === 3 && (
             <div className="space-y-6">
               <CardHeader>
                 <CardTitle className="font-display text-3xl font-black">
-                  UPLOAD FILES
+                  MANUSCRIPT CONTENT
                 </CardTitle>
                 <p className="text-gray-600">
-                  Upload your manuscript and supporting materials
+                  Paste your manuscript content and supporting materials
                 </p>
               </CardHeader>
 
               <CardContent className="space-y-6">
                 <div>
-                  <label className="block font-bold text-sm uppercase tracking-wider mb-4">
+                  <label className="block font-bold text-sm uppercase tracking-wider mb-2">
                     MAIN MANUSCRIPT *
                   </label>
+                  <textarea
+                    value={formData.mainManuscript}
+                    onChange={(e) => setFormData({ ...formData, mainManuscript: e.target.value })}
+                    placeholder="Paste your manuscript text here. Include sections: Introduction, Methods, Results, Discussion, Conclusion"
+                    rows={12}
+                    className="w-full px-4 py-3 bg-white border-4 border-black font-mono text-base
+                             placeholder:text-gray-400 focus:outline-none focus:shadow-neo
+                             transition-shadow duration-150 resize-none"
+                    required
+                  />
+                  <p className="text-sm text-gray-600 mt-2">
+                    Required sections: Introduction, Methods, Results, Discussion, Conclusion
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-sm uppercase tracking-wider mb-2">
+                    REFERENCES *
+                  </label>
+                  <textarea
+                    value={formData.references}
+                    onChange={(e) => setFormData({ ...formData, references: e.target.value })}
+                    placeholder="Paste your references here in standard citation format"
+                    rows={8}
+                    className="w-full px-4 py-3 bg-white border-4 border-black font-mono text-base
+                             placeholder:text-gray-400 focus:outline-none focus:shadow-neo
+                             transition-shadow duration-150 resize-none"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-sm uppercase tracking-wider mb-2">
+                    FIGURE LEGENDS
+                  </label>
+                  <textarea
+                    value={formData.figureLegends}
+                    onChange={(e) => setFormData({ ...formData, figureLegends: e.target.value })}
+                    placeholder="Include captions for all figures (optional)"
+                    rows={6}
+                    className="w-full px-4 py-3 bg-white border-4 border-black font-mono text-base
+                             placeholder:text-gray-400 focus:outline-none focus:shadow-neo
+                             transition-shadow duration-150 resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-sm uppercase tracking-wider mb-4">
+                    SUPPLEMENTARY FILES
+                  </label>
                   <div
-                    className="border-4 border-dashed border-black p-12 text-center
-                             hover:bg-gray-50 transition-colors cursor-pointer"
+                    className="border-4 border-dashed border-black p-8 text-center
+                             hover:bg-gray-50 transition-colors cursor-pointer relative"
                   >
-                    <div className="text-6xl mb-4">📄</div>
-                    <p className="font-bold text-xl mb-2">
-                      DROP YOUR MANUSCRIPT HERE
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0]
+                        if (file) {
+                          setFormData({ ...formData, supplementaryFiles: file })
+                        }
+                      }}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      accept=".zip,.pdf,.doc,.docx"
+                    />
+                    <div className="text-4xl mb-2">📎</div>
+                    <p className="font-bold text-lg mb-1">
+                      {formData.supplementaryFiles 
+                        ? formData.supplementaryFiles.name 
+                        : 'DROP SUPPLEMENTARY FILES HERE'}
                     </p>
-                    <p className="text-gray-600 mb-4">
-                      PDF, DOC, DOCX, or TEX files up to 50MB
+                    <p className="text-gray-600 mb-3 text-sm">
+                      {formData.supplementaryFiles 
+                        ? `Selected: ${(formData.supplementaryFiles.size / 1024 / 1024).toFixed(2)} MB`
+                        : 'ZIP, PDF, or other supporting materials (optional)'}
                     </p>
-                    <Button variant="outline">
-                      CHOOSE FILE
+                    <Button variant="outline" size="sm" type="button">
+                      CHOOSE FILES
                     </Button>
                   </div>
                 </div>
@@ -370,8 +501,13 @@ export default function SubmitPaperPage() {
                   </ul>
                 </div>
 
-                <Button onClick={handleSubmit} className="w-full" size="lg">
-                  SUBMIT PAPER FOR REVIEW
+                <Button 
+                  onClick={handleSubmit} 
+                  className="w-full" 
+                  size="lg"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'SUBMITTING...' : 'SUBMIT PAPER FOR REVIEW'}
                 </Button>
               </CardContent>
             </div>
