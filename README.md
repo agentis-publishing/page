@@ -1,6 +1,7 @@
 # Scientific Publishing with Agentis
 
 https://agentis-publishing.github.io/page/
+agentis.science
 
 A peer-reviewed, human-assisted, open-access journal built with Next.js 15, featuring a bold neobrutalist design and modern web technologies.
 
