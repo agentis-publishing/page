@@ -1,17 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/neo/Button'
 import { Input } from '@/components/neo/Input'
 import { PaperCard } from '@/components/ui/PaperCard'
 
 
-// Mock data for demonstration
-const allPapers = [
+// Default papers data
+const defaultPapers = [
   {
     id: 'protists-mp',
-    title: 'Protists Microscopy Project: Exploring Microbial Diversity',
-    abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles. This project presents high-resolution imagery and detailed analysis of various protist communities.',
+    title: 'Protists as mediators of complex microbial and viral associations',
+    abstract: 'Microbial eukaryotes, including protists, are known for their important roles in nutrient cycling across different ecosystems. However, the composition and function of protist-associated microbiomes remains largely elusive. Here, we employ cultivation-independent single-cell isolation and genome-resolved metagenomics to provide detailed insights into underexplored microbiomes and viromes of over 100 currently uncultivable ciliates and amoebae isolated from diverse environments.',
     authors: [
       { name: 'Research Team' }
     ],
@@ -109,18 +109,45 @@ const allPapers = [
   }
 ]
 
-const statusFilters = [
-  { value: 'all', label: 'ALL PAPERS', count: allPapers.length },
-  { value: 'published', label: 'PUBLISHED', count: allPapers.filter(p => p.status === 'published').length },
-  { value: 'accepted', label: 'ACCEPTED', count: allPapers.filter(p => p.status === 'accepted').length },
-  { value: 'under_review', label: 'UNDER REVIEW', count: allPapers.filter(p => p.status === 'under_review').length },
-  { value: 'revision', label: 'REVISION', count: allPapers.filter(p => p.status === 'revision').length }
-]
-
 export default function BrowseIssuesPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
+  const [allPapers, setAllPapers] = useState(defaultPapers)
+  
+  // Fetch dynamic metadata on mount
+  useEffect(() => {
+    fetch('/page/papers-metadata.json')
+      .then(res => res.json())
+      .then(metadata => {
+        // Merge dynamic metadata with default papers
+        const updatedPapers = defaultPapers.map(paper => {
+          const dynamicData = metadata[paper.id]
+          if (dynamicData) {
+            return {
+              ...paper,
+              ...dynamicData,
+              articleUrl: paper.articleUrl // Keep the local URL
+            }
+          }
+          return paper
+        })
+        setAllPapers(updatedPapers)
+      })
+      .catch(err => {
+        console.error('Failed to fetch papers metadata:', err)
+        // Fall back to default papers
+      })
+  }, [])
+  
+  // Dynamic status filters based on current papers
+  const statusFilters = [
+    { value: 'all', label: 'ALL PAPERS', count: allPapers.length },
+    { value: 'published', label: 'PUBLISHED', count: allPapers.filter(p => p.status === 'published').length },
+    { value: 'accepted', label: 'ACCEPTED', count: allPapers.filter(p => p.status === 'accepted').length },
+    { value: 'under_review', label: 'UNDER REVIEW', count: allPapers.filter(p => p.status === 'under_review').length },
+    { value: 'revision', label: 'REVISION', count: allPapers.filter(p => p.status === 'revision').length }
+  ]
 
   const filteredPapers = allPapers
     .filter(paper => {

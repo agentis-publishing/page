@@ -6,7 +6,7 @@ interface ArticlePageProps {
   }>
 }
 
-// Mock article data - in production this would come from a database
+// Article data - in production this would come from a database or API
 const articlesData: Record<string, { 
   title: string; 
   htmlUrl: string; 
@@ -14,10 +14,10 @@ const articlesData: Record<string, {
   abstract: string;
 }> = {
   'protists-mp': {
-    title: 'Protists Microscopy Project',
+    title: 'Protists as mediators of complex microbial and viral associations',
     htmlUrl: 'https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html',
     authors: ['Research Team'],
-    abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles. This project presents high-resolution imagery and detailed analysis of various protist communities.'
+    abstract: 'Microbial eukaryotes, including protists, are known for their important roles in nutrient cycling across different ecosystems. However, the composition and function of protist-associated microbiomes remains largely elusive. Here, we employ cultivation-independent single-cell isolation and genome-resolved metagenomics to provide detailed insights into underexplored microbiomes and viromes of over 100 currently uncultivable ciliates and amoebae isolated from diverse environments. Our findings reveal unique microbiome compositions and hint at an intricate network of complex interactions and associations with bacterial symbionts and viruses. We observed stark differences between ciliates and amoebae in terms of microbiome and virome compositions, highlighting the specificity of protist-microbe interactions. Over 115 of the recovered microbial genomes were affiliated with known endosymbionts of eukaryotes, including diverse members of the Holosporales, Rickettsiales, Legionellales, Chlamydiae, Dependentiae, and more than 250 were affiliated with possible host-associated bacteria of the phylum Patescibacteria. We also identified more than 80 giant viruses belonging to diverse viral lineages, of which some were actively expressing genes in single cell transcriptomes, suggesting a possible association with the sampled protists. We also revealed a wide range of other viruses that were predicted to infect eukaryotes or host-associated bacteria. Our results provide further evidence that protists serve as mediators of complex microbial and viral associations, playing a critical role in ecological networks. The frequent co-occurrence of giant viruses and diverse microbial symbionts in our samples suggests multipartite associations, particularly among amoebae. Our study provides a preliminary assessment of the microbial diversity associated with lesser-known protist lineages and paves the way for a deeper understanding of protist ecology and their roles in environmental and human health.'
   }
 }
 

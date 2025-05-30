@@ -31,7 +31,8 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
   
   useEffect(() => {
     // Set the initial URL on client side to avoid hydration issues
-    setCurrentUrl(cdnUrls.raw)
+    // Use jsDelivr as primary since raw.githubusercontent.com blocks iframes
+    setCurrentUrl(cdnUrls.jsdelivr)
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [htmlUrl])
@@ -94,12 +95,12 @@ export function ArticleViewer({ title, htmlUrl, authors, abstract }: ArticleView
                 console.error('Iframe loading error:', e)
                 // Try alternative URLs in sequence
                 const iframe = e.currentTarget as HTMLIFrameElement
-                if (iframe.src === cdnUrls.raw) {
+                if (iframe.src === cdnUrls.jsdelivr) {
+                  setCurrentUrl(cdnUrls.githack)
+                } else if (iframe.src === cdnUrls.githack) {
                   setCurrentUrl(cdnUrls.direct)
                 } else if (iframe.src === cdnUrls.direct) {
-                  setCurrentUrl(cdnUrls.jsdelivr)
-                } else if (iframe.src === cdnUrls.jsdelivr) {
-                  setCurrentUrl(cdnUrls.githack)
+                  setCurrentUrl(cdnUrls.raw)
                 }
               }}
             />
