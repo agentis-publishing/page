@@ -60,35 +60,54 @@ export default function SubmitPaperPage() {
         return
       }
 
-      // Prepare form data
-      const submitData = new FormData()
-      submitData.append('title', formData.title)
-      submitData.append('authors', JSON.stringify(formData.authors))
-      submitData.append('abstract', formData.abstract)
-      submitData.append('keywords', formData.keywords)
-      submitData.append('mainManuscript', formData.mainManuscript)
-      submitData.append('references', formData.references)
-      submitData.append('figureLegends', formData.figureLegends)
-      submitData.append('coverLetter', formData.coverLetter)
-      submitData.append('aiReviewOptIn', formData.aiReviewOptIn.toString())
-      
-      if (formData.supplementaryFiles) {
-        submitData.append('supplementaryFiles', formData.supplementaryFiles)
+      // Handle supplementary file upload if present
+      let suppPath = null
+      if (formData.supplementaryFiles && formData.supplementaryFiles.size > 0) {
+        const fileExt = formData.supplementaryFiles.name.split('.').pop()
+        const fileName = `${user.id}/${Date.now()}_supplementary.${fileExt}`
+        
+        const { error: uploadError } = await supabase.storage
+          .from('supplementary')
+          .upload(fileName, formData.supplementaryFiles)
+          
+        if (uploadError) {
+          console.error('Upload error:', uploadError)
+          alert('Failed to upload supplementary files: ' + uploadError.message)
+          return
+        }
+        
+        suppPath = fileName
       }
 
-      // Submit to API
-      const response = await fetch('/api/submit', {
-        method: 'POST',
-        body: submitData
-      })
+      // Parse keywords to array
+      const keywords = formData.keywords.split(',').map(k => k.trim()).filter(k => k)
 
-      const result = await response.json()
+      // Insert submission into database
+      const { data, error } = await supabase
+        .from('submissions')
+        .insert({
+          user_id: user.id,
+          title: formData.title,
+          authors: formData.authors.map(author => author.name), // Store only names as string array
+          abstract: formData.abstract,
+          keywords: keywords,
+          main_manuscript: formData.mainManuscript,
+          manuscript_references: formData.references, // Note: DB column is 'manuscript_references'
+          figure_legends: formData.figureLegends,
+          cover_letter: formData.coverLetter,
+          ai_review_opt_in: formData.aiReviewOptIn,
+          supp_path: suppPath,
+          status: 'received'
+        })
+        .select()
+        .single()
 
-      if (response.ok) {
-        alert(`Paper submitted successfully! Submission ID: ${result.submissionId}`)
-        router.push('/dashboard')
+      if (error) {
+        console.error('Submission error:', error)
+        alert('Failed to submit paper: ' + error.message)
       } else {
-        alert(result.error || 'Failed to submit paper')
+        alert(`Paper submitted successfully! Submission ID: ${data.id}`)
+        router.push('/dashboard')
       }
     } catch (error) {
       console.error('Submission error:', error)
