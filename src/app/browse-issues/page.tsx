@@ -9,7 +9,7 @@ import { PaperCard } from '@/components/ui/PaperCard'
 // Mock data for demonstration
 const allPapers = [
   {
-    id: '1',
+    id: 'protists-mp',
     title: 'Protists Microscopy Project: Exploring Microbial Diversity',
     abstract: 'A comprehensive microscopy study documenting diverse protist species, their morphological characteristics, and ecological roles. This project presents high-resolution imagery and detailed analysis of various protist communities.',
     authors: [
@@ -21,7 +21,7 @@ const allPapers = [
     downloads: 45,
     citations: 3,
     keywords: ['protists', 'microscopy', 'microbiology', 'biodiversity'],
-    htmlUrl: 'https://agentis-publishing.github.io/public-testing/protists_mp/protists_mp.html'
+    articleUrl: '/articles/protists-mp'
   },
   {
     id: '2',

@@ -21,6 +21,7 @@ interface Paper {
   citations?: number
   keywords?: string[]
   htmlUrl?: string
+  articleUrl?: string
 }
 
 interface PaperCardProps {
@@ -98,9 +99,9 @@ export function PaperCard({ paper, showMetrics = false }: PaperCardProps) {
             variant="outline" 
             size="sm" 
             className="flex-1" 
-            href={paper.htmlUrl || "/article-not-found"}
-            target={paper.htmlUrl ? "_blank" : undefined}
-            rel={paper.htmlUrl ? "noopener noreferrer" : undefined}
+            href={paper.articleUrl || paper.htmlUrl || "/article-not-found"}
+            target={paper.htmlUrl && !paper.articleUrl ? "_blank" : undefined}
+            rel={paper.htmlUrl && !paper.articleUrl ? "noopener noreferrer" : undefined}
           >
             READ MORE →
           </Button>
