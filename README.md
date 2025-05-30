@@ -1,5 +1,7 @@
 # Scientific Publishing with Agentis
 
+![Version](https://img.shields.io/badge/version-v0.1.0-blue)
+
 https://agentis-publishing.github.io/page/
 agentis.science
 
